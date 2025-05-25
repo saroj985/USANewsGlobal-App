@@ -32,7 +32,7 @@ def show_category(category):
         "technology": "technology",
         "science": "science",
         "entertainment": "entertainment",
-        "travel": "travel",
+        "travel": "general",
         
        
     }
