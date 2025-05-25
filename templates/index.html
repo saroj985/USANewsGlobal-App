@@ -1,0 +1,66 @@
+<section class="news-section">
+  <div class="section-header">
+    <h2 class="section-title">Latest News</h2>
+    <div class="section-controls" role="group" aria-label="Sort articles">
+      <button class="sort-btn active" aria-pressed="true">Latest</button>
+      <button class="sort-btn" aria-pressed="false">Popular</button>
+    </div>
+  </div>
+
+  <div class="section-subheader">
+    <p class="section-description">
+      Top stories updated <span class="timestamp">just now</span>
+    </p>
+    <a href="#" class="view-all">
+      View All News <i class="fas fa-arrow-right"></i>
+    </a>
+  </div>
+
+  <div class="news-grid">
+    {% for article in articles[1:7] %}
+    <article class="news-card">
+      <div class="card-image-container">
+        <img
+          src="{{ article.urlToImage or '/static/placeholder.jpg' }}"
+          alt="News image for {{ article.title }}"
+          loading="lazy"
+        />
+        <span class="time-ago">2h ago</span>
+        <span class="category-label">{{ article.category or 'General' }}</span>
+      </div>
+      <div class="card-content">
+        <h3>{{ article.title }}</h3>
+        <p class="byline">
+          {% if article.author %}
+          <span class="author">By {{ article.author }}</span> • {% endif %}
+          <span class="source">
+            {{ article.source.name if article.source else "USA News Global" }}
+          </span>
+        </p>
+        <p class="excerpt">
+          {{ article.description or "No description available." }}
+        </p>
+        <div class="card-footer">
+          <div class="social-share" aria-label="Share this article">
+            <a href="#" title="Share on Twitter"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="#" title="Share on Facebook"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" title="Copy link"><i class="fas fa-link"></i></a>
+          </div>
+          <a
+            href="{{ article.url }}"
+            target="_blank"
+            rel="noopener"
+            class="read-more"
+          >
+            Read more <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>

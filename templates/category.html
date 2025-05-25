@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }} News | USA News Global</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+
+    <div class="news-ticker" aria-label="Live news ticker">
+      <div class="ticker-label">LIVE</div>
+      <div class="ticker-content">
+        <span>
+          • {{ title }} updates: Latest developments • Related stories from
+          around the world •
+        </span>
+      </div>
+    </div>
+
+    <header class="hero category">
+      <div class="hero-content">
+        <h1>{{ title }} News</h1>
+        <p class="tagline">
+          Comprehensive coverage of {{ title|lower }} news and developments
+        </p>
+      </div>
+    </header>
+
+    <main class="content-wrapper">
+      <section class="news-section">
+        <div class="section-header">
+          <h2 class="section-title">{{ title }} Headlines</h2>
+          <div class="section-controls" role="group" aria-label="Sort articles">
+            <button class="sort-btn active" aria-pressed="true">Latest</button>
+            <button class="sort-btn" aria-pressed="false">Popular</button>
+          </div>
+          <div class="section-subheader">
+            <p class="section-description">
+              Top stories updated <span class="timestamp">just now</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="news-grid">
+          {% for article in articles %}
+          <article class="news-card">
+            <div class="card-image-container">
+              <img
+                src="{{ article.urlToImage or '/static/placeholder.jpg' }}"
+                alt="News image for {{ article.title }}"
+                loading="lazy"
+              />
+              <span class="time-ago">2h ago</span>
+            </div>
+            <div class="card-content">
+              <span class="category-tag">{{ title }}</span>
+              <h3>{{ article.title }}</h3>
+              <p>{{ article.description or "No description available." }}</p>
+              <div class="card-footer">
+                <a
+                  href="{{ article.url }}"
+                  target="_blank"
+                  rel="noopener"
+                  class="read-more"
+                >
+                  Read more <i class="fa fa-arrow-right"></i>
+                </a>
+                <span class="source">
+                  {{ article.source.name if article.source else "USA News
+                  Global" }}
+                </span>
+              </div>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+<nav>
+  <div class="nav-container">
+    <div class="logo-container">
+      <a href="/" class="logo">USA News Global</a>
+      <span class="current-date">May 25, 2025</span>
+    </div>
+
+    <div class="mobile-menu-toggle" id="mobileMenuToggle">
+      <i class="fas fa-bars"></i>
+    </div>
+
+    <ul class="nav-links" id="navLinks">
+      <li>
+        <a href="/us" class="{% if title == 'US' %}active{% endif %}"
+          ><i class="fas fa-flag-usa"></i> US</a
+        >
+      </li>
+      <li>
+        <a href="/global" class="{% if title == 'Global' %}active{% endif %}"
+          ><i class="fas fa-globe"></i> Global</a
+        >
+      </li>
+      <li>
+        <a
+          href="/business"
+          class="{% if title == 'Business' %}active{% endif %}"
+          ><i class="fas fa-briefcase"></i> Business</a
+        >
+      </li>
+      <li>
+        <a href="/finance" class="{% if title == 'Finance' %}active{% endif %}"
+          ><i class="fas fa-chart-line"></i> Finance</a
+        >
+      </li>
+      <li>
+        <a
+          href="/technology"
+          class="{% if title == 'Technology' %}active{% endif %}"
+          ><i class="fas fa-microchip"></i> Tech</a
+        >
+      </li>
+      <li>
+        <a href="/sports" class="{% if title == 'Sports' %}active{% endif %}"
+          ><i class="fas fa-running"></i> Sports</a
+        >
+      </li>
+      <li class="search-item">
+        <form class="search-form">
+          <input type="text" placeholder="Search news..." />
+          <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+      </li>
+    </ul>
+  </div>
+</nav>
