@@ -20,13 +20,7 @@
           ><i class="fas fa-globe"></i> Global</a
         >
       </li>
-      <li>
-        <a
-          href="/business"
-          class="{% if title == 'Business' %}active{% endif %}"
-          ><i class="fas fa-briefcase"></i> Business</a
-        >
-      </li>
+
       <li>
         <a href="/finance" class="{% if title == 'Finance' %}active{% endif %}"
           ><i class="fas fa-chart-line"></i> Finance</a
@@ -44,6 +38,30 @@
           ><i class="fas fa-running"></i> Sports</a
         >
       </li>
+
+      <li>
+        <a href="/health" class="{% if title == 'Health' %}active{% endif %}"
+          ><i class="fas fa-heartbeat"></i> Health</a
+        >
+      </li>
+      <li>
+        <a href="/science" class="{% if title == 'Science' %}active{% endif %}"
+          ><i class="fas fa-flask"></i> Science</a
+        >
+      </li>
+      <li>
+        <a
+          href="/entertainment"
+          class="{% if title == 'Entertainment' %}active{% endif %}"
+          ><i class="fas fa-film"></i> Entertainment</a
+        >
+      </li>
+      <li>
+        <a href="/travel" class="{% if title == 'Travel' %}active{% endif %}"
+          ><i class="fas fa-plane"></i> Travel</a
+        >
+      </li>
+
       <li class="search-item">
         <form class="search-form">
           <input type="text" placeholder="Search news..." />

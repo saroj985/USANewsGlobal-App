@@ -8,21 +8,18 @@ load_dotenv()
 app = Flask(__name__)
 API_KEY = os.getenv("NEWS_API_KEY")
 
-def get_news(category):
-    url = f"https://newsapi.org/v2/top-headlines?category={category}&country=us&pageSize=1&apiKey={API_KEY}"
+def get_news(category, page_size=10):
+    url = f"https://newsapi.org/v2/top-headlines?category={category}&country=us&pageSize={page_size}&apiKey={API_KEY}"
     res = requests.get(url).json()
     if res["status"] == "ok" and res["articles"]:
-        article = res["articles"][0]
-        return {
-            "title": article["title"],
-            "snippet": article["description"] or "No description available"
-        }
-    return {"title": f"No {category} news", "snippet": "No data found."}
+        return res["articles"]
+    return []
 
 @app.route("/")
 def home():
-    article = get_news("general")
-    return render_template("index.html", article=article)
+    articles = get_news("general", page_size=10)
+    ticker_messages = [article["title"] for article in articles if article.get("title")]
+    return render_template("index.html", articles=articles, ticker_messages=ticker_messages)
 
 @app.route("/<category>")
 def show_category(category):
@@ -31,15 +28,23 @@ def show_category(category):
         "global": "general",
         "finance": "business",
         "sports": "sports",
-        "local": "general",
-        "business": "business"
+        "health": "health",
+        "technology": "technology",
+        "science": "science",
+        "entertainment": "entertainment",
+        "travel": "travel",
+        
+       
     }
-
     news_category = category_map.get(category.lower(), "general")
-    url = f"https://newsapi.org/v2/top-headlines?category={news_category}&country=us&pageSize=10&apiKey={API_KEY}"
-    res = requests.get(url).json()
-    articles = res.get("articles", [])
-    return render_template("category.html", articles=articles, title=category.capitalize())
+    articles = get_news(news_category, page_size=10)
+    ticker_messages = [article["title"] for article in articles if article.get("title")]
+    return render_template(
+        "category.html",
+        articles=articles,
+        title=category.capitalize(),
+        ticker_messages=ticker_messages
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
