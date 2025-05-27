@@ -1,7 +1,7 @@
 <div class="ai-assistant-container">
   <div class="ai-header">
     <span class="ai-icon">🤖</span>
-    <h3>Ask AI Assistant</h3>
+    <h3>Ask AI Assistant For Latest News</h3>
   </div>
   <div class="ai-chat-window" id="aiChatWindow">
     <!-- Messages will appear here -->
@@ -13,30 +13,34 @@
       placeholder="Ask me anything about the news..."
       required
     />
+    <select id="aiSourceSelect" style="margin-left: 8px">
+      <option value="ai">AI</option>
+      <option value="news">News</option>
+    </select>
     <button type="submit">Send</button>
   </form>
 </div>
 <script>
-  // Simple frontend logic for demonstration
   document.getElementById("aiChatForm").onsubmit = async function (e) {
     e.preventDefault();
     const input = document.getElementById("aiUserInput");
+    const source = document.getElementById("aiSourceSelect").value;
     const chatWindow = document.getElementById("aiChatWindow");
     const userMsg = document.createElement("div");
     userMsg.className = "ai-msg user";
     userMsg.textContent = input.value;
     chatWindow.appendChild(userMsg);
 
-    // Call your backend AI endpoint here (replace '/ai/ask' with your route)
+    // Send user question and source to backend
     const res = await fetch("/ai/ask", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question: input.value }),
+      body: JSON.stringify({ question: input.value, source: source }),
     });
     const data = await res.json();
     const aiMsg = document.createElement("div");
     aiMsg.className = "ai-msg ai";
-    aiMsg.textContent = data.answer || "Sorry, I couldn't answer that.";
+    aiMsg.innerHTML = data.answer || "Sorry, I couldn't answer that."; // <-- changed here
     chatWindow.appendChild(aiMsg);
 
     input.value = "";
