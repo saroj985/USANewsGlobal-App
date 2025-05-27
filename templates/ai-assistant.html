@@ -1,0 +1,45 @@
+<div class="ai-assistant-container">
+  <div class="ai-header">
+    <span class="ai-icon">🤖</span>
+    <h3>Ask AI Assistant</h3>
+  </div>
+  <div class="ai-chat-window" id="aiChatWindow">
+    <!-- Messages will appear here -->
+  </div>
+  <form class="ai-chat-form" id="aiChatForm" autocomplete="off">
+    <input
+      type="text"
+      id="aiUserInput"
+      placeholder="Ask me anything about the news..."
+      required
+    />
+    <button type="submit">Send</button>
+  </form>
+</div>
+<script>
+  // Simple frontend logic for demonstration
+  document.getElementById("aiChatForm").onsubmit = async function (e) {
+    e.preventDefault();
+    const input = document.getElementById("aiUserInput");
+    const chatWindow = document.getElementById("aiChatWindow");
+    const userMsg = document.createElement("div");
+    userMsg.className = "ai-msg user";
+    userMsg.textContent = input.value;
+    chatWindow.appendChild(userMsg);
+
+    // Call your backend AI endpoint here (replace '/ai/ask' with your route)
+    const res = await fetch("/ai/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: input.value }),
+    });
+    const data = await res.json();
+    const aiMsg = document.createElement("div");
+    aiMsg.className = "ai-msg ai";
+    aiMsg.textContent = data.answer || "Sorry, I couldn't answer that.";
+    chatWindow.appendChild(aiMsg);
+
+    input.value = "";
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  };
+</script>
